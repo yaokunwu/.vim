@@ -1,107 +1,42 @@
-set smartindent
-set expandtab
-filetype plugin on
 syntax on
-set cursorline
-let mapleader = " "
-filetype plugin indent on
-set tabstop=4
-set shiftwidth=4
-map <up> :res +5<CR>
-map <down> :res -5<CR>
-map <left> :vertical resize-5<CR>
-map <C-q> :+tabnext<CR>
-map <C-e> :-tabnext<CR>
-map <C-T> :tabe<CR>
-map <right> :vertical resize+5<CR>
-if $TERM_PROGRAM =~ "iTerm"
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
-endif
-set number
-set relativenumber
-set wildmenu
-set wrap
-setlocal formatoptions=tacqw
-setlocal textwidth=80
-setlocal wrapmargin=0
-set showcmd
-setlocal autoindent
-set nocompatible
-noremap , 5k
-imap {<CR> {}<ESC>i<CR><TAB><ESC>V<O<TAB>
-imap () ()<ESC>i<right>
-imap ( ()<ESC>i
-noremap . 5j
-map s :<nop>
-map S :w<CR>
 
-map <LEADER>i <C-w>l
-map <LEADER>u <C-w>k
-map <LEADER>n <C-w>h
-map <LEADER>e <C-w>j
-au BufEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-au BufLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
-map Q :q<CR>
-map R :source $MYVIMRC<CR>
-map si :set splitright<CR>:vsplit<CR>
-map sn :set nosplitright<CR>:vsplit<CR>
-map su :set nosplitbelow<CR>:split<CR>
-map se :set splitbelow<CR>:split<CR>
+" Editing behaviour {{{
+"set relativenumber
+"set showmode                    " always show what mode we're currently editing in
+"set nowrap                      " don't wrap lines
+set tabstop=4                   " a tab is four spaces
+set softtabstop=4               " when hitting <BS>, pretend like a tab is removed, even if spaces
+set expandtab                   " expand tabs by default (overloadable per file type later)
+set shiftwidth=4                " number of spaces to use for autoindenting
+set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
+"set backspace=indent,eol,start  " allow backspacing over everything in insert mode
+set autoindent                  " always set autoindenting on
+set copyindent                  " copy the previous indentation on autoindenting
+set number                      " always show line numbers
+"set showmatch                   " set show matching parenthesis
+set ignorecase                  " ignore case when searching
+set smartcase                   " ignore case if search pattern is all lowercase,
+                                "    case-sensitive otherwise
+set smarttab                    " insert tabs on the start of a line according to
+                                "    shiftwidth, not tabstop
+set scrolloff=4                 " keep 4 lines off the edges of the screen when scrolling
+"set virtualedit=all             " allow the cursor to go in to "invalid" places
+"set hlsearch                    " highlight search terms
+"set incsearch                   " show search matches as you type
+set gdefault                    " search/replace "globally" (on a line) by default
+"set listchars=tab:▸\ ,trail:·,extends:#,nbsp:·
 
-set hlsearch
-exec "nohlsearch"
-noremap n nzz
-noremap N Nzz
-set incsearch
-set ignorecase
-set smartcase
-noremap <LEADER><CR> :nohlsearch<CR>
-set backspace=indent,eol,start
-call plug#begin('~/.vim/plugged')
-Plug 'vim-airline/vim-airline'
-Plug 'vimwiki/vimwiki'
-Plug 'preservim/nerdtree'
-Plug 'connorholyday/vim-snazzy'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-call plug#end()
+"set nolist                      " don't show invisible characters by default,
+                                " but it is enabled for some file types (see later)
+"set pastetoggle=<F2>            " when in insert mode, press <F2> to go to
+                                "    paste mode, where you can paste mass data
+                                "    that won't be autoindented
+"set mouse=a                     " enable using the mouse if terminal emulator
+                                "    supports it (xterm does)       
+"set fileformats="unix,dos,mac"
+"set formatoptions+=1            " When wrapping paragraphs, don't end lines
+                                "    with 1-letter words (looks stupid)
 
 
-map ff :NERDTreeToggle<CR>
-let NERDTreeMapOpenExpl = ""
-let NERDTreeMapUpdir = ""
-let NERDTreeMapUpdirKeepOpen = "l"
-let NERDTreeMapOpenSplit = ""
-let NERDTreeOpenVSplit = ""
-let NERDTreeMapActivateNode = "i"
-let NERDTreeMapOpenInTab = "o"
-let NERDTreeMapPreview = ""
-let NERDTreeMapCloseDir = "n"
-let NERDTreeMapChangeRoot = "y"
-
-map F :MarkdownPreview
-map C :MarkdownPreviewStop
-let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 1
-let g:mkdp_refresh_slow = 0
-let g:mkdp_command_for_global = 0
-let g:mkdp_open_to_the_world = 0
-let g:mkdp_browser = 'chromium-browser'
-let g:mkdp_echo_preview_url = 0
-let g:mkdp_browserfunc = ''
-let g:mkdp_open_ip = ''
-
-let g:mkdp_preview_options = {
-    \ 'mkit': {},
-    \ 'katex': {},
-    \ 'uml': {},
-    \ 'maid': {},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type': 'middle',
-    \ 'hide_yaml_meta': 1
-    \ }
-let g:mkdp_markdown_css = ''
-let g:mkdp_highlight_css = ''
-let g:mkdp_port = ''
-let g:mkdp_page_title = '「${name}」'
-let g:vimwiki_list = [{'path': '~/vimwiki/',
-                      \ 'syntax': 'markdown', 'ext': '.md'}]
+"set shortmess+=I                " hide the launch screen
+"set clipboard=unnamed           " normal OS clipboard interaction
